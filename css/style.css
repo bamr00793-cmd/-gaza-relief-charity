@@ -1,0 +1,63 @@
+/* تنسيق عام */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    padding-top: 76px; /* تعويض ارتفاع ال navbar */
+}
+
+/* الهيرو سيكشن */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('https://via.placeholder.com/1920x600/555/fff?text=غزة+تحتاج+إليك');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 100px 0;
+}
+
+/* عناوين الأقسام */
+.section-title {
+    position: relative;
+    padding-bottom: 15px;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 80px;
+    height: 3px;
+    background-color: #dc3545;
+}
+
+/* تأثيرات على الكروت */
+.card {
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Navbar fix */
+.navbar {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* تنسيق الفيديو */
+.video {
+    background-color: #f8f9fa;
+}
+
+/* تنسيق الفوتر */
+footer a:hover {
+    color: #dc3545 !important;
+    text-decoration: none;
+}
+.img{
+    background-image: url('../assesstes/image/gaza.jpg');
+    
+}
