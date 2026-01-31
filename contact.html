@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اتصل بنا - إغاثة غزة</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .contact-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 30px;
+            height: 100%;
+        }
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .form-control:focus {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+        }
+        .error {
+            border-color: #dc3545 !important;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875em;
+            display: none;
+        }
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        .map-container {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .donation-options .card {
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .donation-options .card:hover {
+            transform: scale(1.05);
+        }
+        .donation-options .card.selected {
+            border-color: #dc3545;
+            background-color: #fff5f5;
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-hands-helping"></i> إغاثة غزة
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">عن المؤسسة</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="projects.html">مشاريعنا</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contact.html">اتصل بنا</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- قسم الاتصال -->
+    <div class="container mt-5 pt-5">
+        <h1 class="text-center mb-4">تواصل معنا</h1>
+        <p class="text-center text-muted mb-5">نرحب بأسئلتكم واستفساراتكم ونتطلع لسماع آرائكم</p>
+        
+        <div class="row mb-5">
+            <div class="col-lg-4 mb-4">
+                <div class="contact-info">
+                    <h3 class="mb-4"><i class="fas fa-map-marker-alt me-2"></i>معلومات الاتصال</h3>
+                    
+                    <div class="mb-4">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h5>العنوان</h5>
+                        <p>غزة - شارع الرشيد<br>مبنى مؤسسة إغاثة غزة</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h5>الهاتف</h5>
+                        <p>00972591234567<br>00972598765432</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h5>البريد الإلكتروني</h5>
+                        <p>info@gaza-relief.org<br>support@gaza-relief.org</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h5>ساعات العمل</h5>
+                        <p>الأحد - الخميس: 8 صباحاً - 4 مساءً<br>الجمعة والسبت: مغلق</p>
+                    </div>
+                    
+                    <div class="social-icons mt-4">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-2x"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-2x"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-2x"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-whatsapp fa-2x"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-8">
+                <!-- رسالة النجاح -->
+                <div class="success-message mb-4" id="successMessage">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <span id="successText">تم إرسال رسالتك بنجاح! سنرد عليك في أقرب وقت.</span>
+                </div>
+                
+                <!-- نموذج الاتصال -->
+                <div class="card shadow">
+                    <div class="card-body p-4">
+                        <h3 class="card-title mb-4"><i class="fas fa-paper-plane me-2"></i>أرسل رسالة</h3>
+                        
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label">الاسم الكامل *</label>
+                                    <input type="text" class="form-control" id="name" placeholder="أدخل اسمك">
+                                    <div class="error-message" id="nameError">الاسم مطلوب ويجب أن يكون أكثر من 3 أحرف</div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">البريد الإلكتروني *</label>
+                                    <input type="email" class="form-control" id="email" placeholder="example@email.com">
+                                    <div class="error-message" id="emailError">البريد الإلكتروني غير صالح</div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">رقم الهاتف</label>
+                                <input type="tel" class="form-control" id="phone" placeholder="0591234567">
+                                <div class="error-message" id="phoneError">رقم الهاتف غير صالح</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">الموضوع *</label>
+                                <select class="form-select" id="subject">
+                                    <option value="">اختر الموضوع</option>
+                                    <option value="donation">استفسار عن التبرع</option>
+                                    <option value="volunteer">التطوع مع المؤسسة</option>
+                                    <option value="help">طلب مساعدة</option>
+                                    <option value="suggestion">اقتراح أو شكوى</option>
+                                    <option value="other">موضوع آخر</option>
+                                </select>
+                                <div class="error-message" id="subjectError">الرجاء اختيار الموضوع</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="message" class="form-label">الرسالة *</label>
+                                <textarea class="form-control" id="message" rows="5" placeholder="اكتب رسالتك هنا..."></textarea>
+                                <div class="error-message" id="messageError">الرسالة مطلوبة ويجب أن تكون أكثر من 10 أحرف</div>
+                            </div>
+                            
+                            <!-- خيارات التبرع -->
+                            <div class="mb-4">
+                                <label class="form-label">مبلغ التبرع (اختياري)</label>
+                                <div class="row donation-options">
+                                    <div class="col-4 mb-2">
+                                        <div class="card text-center p-2 amount-card" data-amount="50">
+                                            <div class="card-body">
+                                                <h5 class="card-title">$50</h5>
+                                                <p class="card-text small">تطعم أسرة لمدة أسبوع</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 mb-2">
+                                        <div class="card text-center p-2 amount-card" data-amount="100">
+                                            <div class="card-body">
+                                                <h5 class="card-title">$100</h5>
+                                                <p class="card-text small">مساعدة طبية لـ 5 مرضى</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 mb-2">
+                                        <div class="card text-center p-2 amount-card" data-amount="200">
+                                            <div class="card-body">
+                                                <h5 class="card-title">$200</h5>
+                                                <p class="card-text small">دعم مشروع صغير</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <input type="number" class="form-control" id="customAmount" placeholder="أو أدخل مبلغاً آخر">
+                                </div>
+                                <input type="hidden" id="selectedAmount" value="">
+                            </div>
+                            
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="newsletter">
+                                <label class="form-check-label" for="newsletter">أرغب في تلقي النشرة البريدية</label>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-danger btn-lg" id="submitBtn">
+                                    <i class="fas fa-paper-plane me-2"></i>إرسال الرسالة
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- خريطة -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <h3 class="mb-4">موقعنا على الخريطة</h3>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d108628.15654780666!2d34.40508425!3d31.501555399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14fd8aa13f0d487b%3A0xb2917b5820571d6b!2sGaza!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s" 
+                        width="100%" 
+                        height="400" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+        
+        <!-- الأسئلة الشائعة -->
+        <div class="row">
+            <div class="col-12">
+                <h3 class="mb-4">أسئلة شائعة عن التبرع</h3>
+                <div class="accordion" id="donationFAQ">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                كيف يمكنني التبرع للمؤسسة؟
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#donationFAQ">
+                            <div class="accordion-body">
+                                يمكنك التبرع عبر النموذج أعلاه أو عبر الحساب البنكي للمؤسسة في فلسطين أو عبر خدمات التحويل الدولية.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                هل التبرع آمن؟
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#donationFAQ">
+                            <div class="accordion-body">
+                                نعم، جميع تبرعاتك آمنة ومشفرة. نحن نستخدم أنظمة دفع آمنة لحماية معلوماتك.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                هل أحصل على إيصال للتبرع؟
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#donationFAQ">
+                            <div class="accordion-body">
+                                نعم، سنرسل لك إيصالاً إلكترونياً فور اكتمال عملية التبرع.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>إغاثة غزة</h5>
+                    <p>مؤسسة خيرية إنسانية تعمل في قطاع غزة منذ 2010</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>روابط سريعة</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">الرئيسية</a></li>
+                        <li><a href="projects.html" class="text-white">مشاريعنا</a></li>
+                        <li><a href="contact.html" class="text-white">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>تواصل معنا</h5>
+                    <p><i class="fas fa-phone"></i> 00972591234567</p>
+                    <p><i class="fas fa-envelope"></i> info@gaza-relief.org</p>
+                </div>
+            </div>
+            <hr class="bg-white">
+            <p class="text-center mb-0">&copy; 2024 مؤسسة إغاثة غزة. جميع الحقوق محفوظة</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // اختيار مبلغ التبرع
+            $('.amount-card').click(function() {
+                $('.amount-card').removeClass('selected');
+                $(this).addClass('selected');
+                const amount = $(this).data('amount');
+                $('#selectedAmount').val(amount);
+                $('#customAmount').val('');
+            });
+            
+            // إدخال مبلغ مخصص
+            $('#customAmount').on('input', function() {
+                $('.amount-card').removeClass('selected');
+                if ($(this).val()) {
+                    $('#selectedAmount').val($(this).val());
+                }
+            });
+            
+            // التحقق من صحة النموذج
+            function validateForm() {
+                let isValid = true;
+                
+                // التحقق من الاسم
+                const name = $('#name').val().trim();
+                if (name.length < 3) {
+                    $('#name').addClass('error');
+                    $('#nameError').show();
+                    isValid = false;
+                } else {
+                    $('#name').removeClass('error');
+                    $('#nameError').hide();
+                }
+                
+                // التحقق من البريد الإلكتروني
+                const email = $('#email').val().trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    $('#email').addClass('error');
+                    $('#emailError').show();
+                    isValid = false;
+                } else {
+                    $('#email').removeClass('error');
+                    $('#emailError').hide();
+                }
+                
+                // التحقق من الهاتف (اختياري)
+                const phone = $('#phone').val().trim();
+                if (phone && !/^[0-9+\-\s()]{10,}$/.test(phone)) {
+                    $('#phone').addClass('error');
+                    $('#phoneError').show();
+                    isValid = false;
+                } else {
+                    $('#phone').removeClass('error');
+                    $('#phoneError').hide();
+                }
+                
+                // التحقق من الموضوع
+                const subject = $('#subject').val();
+                if (!subject) {
+                    $('#subject').addClass('error');
+                    $('#subjectError').show();
+                    isValid = false;
+                } else {
+                    $('#subject').removeClass('error');
+                    $('#subjectError').hide();
+                }
+                
+                // التحقق من الرسالة
+                const message = $('#message').val().trim();
+                if (message.length < 10) {
+                    $('#message').addClass('error');
+                    $('#messageError').show();
+                    isValid = false;
+                } else {
+                    $('#message').removeClass('error');
+                    $('#messageError').hide();
+                }
+                
+                return isValid;
+            }
+            
+            // إرسال النموذج
+            $('#contactForm').submit(function(e) {
+                e.preventDefault();
+                
+                if (validateForm()) {
+                    // عرض رسالة التحميل
+                    const submitBtn = $('#submitBtn');
+                    const originalText = submitBtn.html();
+                    submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>جاري الإرسال...');
+                    
+                    // محاكاة إرسال البيانات
+                    setTimeout(function() {
+                        // حفظ البيانات في LocalStorage
+                        const formData = {
+                            name: $('#name').val().trim(),
+                            email: $('#email').val().trim(),
+                            phone: $('#phone').val().trim(),
+                            subject: $('#subject').val(),
+                            message: $('#message').val().trim(),
+                            amount: $('#selectedAmount').val(),
+                            newsletter: $('#newsletter').is(':checked'),
+                            timestamp: new Date().toISOString()
+                        };
+                        
+                        // حفظ في LocalStorage
+                        let submissions = JSON.parse(localStorage.getItem('contactSubmissions') || '[]');
+                        submissions.push(formData);
+                        localStorage.setItem('contactSubmissions', JSON.stringify(submissions));
+                        
+                        // إظهار رسالة النجاح
+                        const amount = formData.amount ? ` بمبلغ $${formData.amount}` : '';
+                        $('#successText').text(`شكراً ${formData.name}! تم إرسال رسالتك${amount} بنجاح. سنتواصل معك قريباً.`);
+                        $('#successMessage').fadeIn();
+                        
+                        // إعادة تعيين النموذج
+                        $('#contactForm')[0].reset();
+                        $('.amount-card').removeClass('selected');
+                        $('#selectedAmount').val('');
+                        
+                        // استعادة زر الإرسال
+                        submitBtn.prop('disabled', false).html(originalText);
+                        
+                        // تمرير سلس إلى رسالة النجاح
+                        $('html, body').animate({
+                            scrollTop: $('#successMessage').offset().top - 100
+                        }, 1000);
+                        
+                        // عرض البيانات في console
+                        console.log('بيانات النموذج المرسلة:', formData);
+                        console.log('جميع الإرساليات المحفوظة:', submissions);
+                        
+                        // عرض إحصائية
+                        showStatistics();
+                        
+                    }, 2000);
+                }
+            });
+            
+            // إظهار إحصائية عن الإرساليات
+            function showStatistics() {
+                const submissions = JSON.parse(localStorage.getItem('contactSubmissions') || '[]');
+                console.log(`عدد الإرساليات الكلي: ${submissions.length}`);
+                
+                // عد المواضيع
+                const subjectsCount = {};
+                submissions.forEach(item => {
+                    subjectsCount[item.subject] = (subjectsCount[item.subject] || 0) + 1;
+                });
+                
+                console.log('توزيع المواضيع:', subjectsCount);
+                
+                // إظهار تنبيه بالإحصائية
+                if (submissions.length > 0) {
+                    setTimeout(() => {
+                        alert(`شكراً لك! لقد قمت بإرسال ${submissions.length} رسالة حتى الآن.`);
+                    }, 500);
+                }
+            }
+            
+            // عرض الإحصائية عند التحميل
+            showStatistics();
+            
+            // إضافة تأثيرات jQuery
+            $('.accordion-button').hover(
+                function() {
+                    $(this).css('background-color', '#f8f9fa');
+                },
+                function() {
+                    $(this).css('background-color', '');
+                }
+            );
+            
+            // تأثير Fade In للعناصر
+            $('.contact-info, .card, .map-container').hide().fadeIn(1000);
+            
+            // Smooth scroll للروابط
+            $('a[href^="#"]').on('click', function(e) {
+                e.preventDefault();
+                const target = $(this.getAttribute('href'));
+                if(target.length) {
+                    $('html, body').animate({
+                        scrollTop: target.offset().top - 70
+                    }, 1000);
+                }
+            });
+            
+            // التحقق أثناء الكتابة
+            $('#name, #email, #message').on('input', function() {
+                validateForm();
+            });
+            
+            // تأثيرات على خيارات التبرع
+            $('.amount-card').hover(
+                function() {
+                    $(this).css('transform', 'translateY(-5px)');
+                },
+                function() {
+                    $(this).css('transform', '');
+                }
+            );
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشاريعنا - إغاثة غزة</title>
+    <!-- bootstrap from web -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .project-card {
+            transition: all 0.3s ease;
+            border: 1px solid #dee2e6;
+        }
+        .project-card:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+        .project-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        .progress {
+            height: 20px;
+        }
+        .filter-btn {
+            margin: 5px;
+        }
+        .modal-img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-hands-helping"></i> إغاثة غزة
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">عن المؤسسة</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="projects.html">مشاريعنا</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">اتصل بنا</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- قسم المشاريع -->
+    <div class="container mt-5 pt-5">
+        <h1 class="text-center mb-4">مشاريعنا الخيرية</h1>
+        <p class="text-center text-muted mb-5">نعمل على تنفيذ مشاريع متنوعة تلبي احتياجات أهالي غزة</p>
+        
+        <!-- أزرار التصفية -->
+        <div class="text-center mb-4">
+            <button class="btn btn-outline-primary filter-btn active" data-filter="all">جميع المشاريع</button>
+            <button class="btn btn-outline-success filter-btn" data-filter="ongoing">قيد التنفيذ</button>
+            <button class="btn btn-outline-info filter-btn" data-filter="completed">مكتملة</button>
+            <button class="btn btn-outline-warning filter-btn" data-filter="urgent">طارئة</button>
+        </div>
+        
+        <!-- شريط البحث -->
+        <div class="row mb-4">
+            <div class="col-md-6 mx-auto">
+                <div class="input-group">
+                    <input type="text" id="searchInput" class="form-control" placeholder="ابحث عن مشروع...">
+                    <button class="btn btn-danger" type="button" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- عرض المشاريع -->
+        <div class="row" id="projectsContainer">
+            <!-- سيتم تعبئته بالجافاسكريبت -->
+        </div>
+        
+        <!-- جدول تفاصيل المشاريع -->
+        <h3 class="mt-5 mb-4">تفاصيل المشاريع</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-danger">
+                    <tr>
+                        <th>اسم المشروع</th>
+                        <th>الميزانية</th>
+                        <th>المدة</th>
+                        <th>المستفيدين</th>
+                        <th>الحالة</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="projectsTable">
+                    <!-- سيتم تعبئته بالجافاسكريبت -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal لعرض تفاصيل المشروع -->
+    <div class="modal fade" id="projectModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">تفاصيل المشروع</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img id="modalImage" src="" class="img-fluid mb-3 modal-img" alt="">
+                    <p id="modalDescription"></p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>الميزانية:</strong> <span id="modalBudget"></span></p>
+                            <p><strong>المدة:</strong> <span id="modalDuration"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>المستفيدين:</strong> <span id="modalBeneficiaries"></span></p>
+                            <p><strong>الحالة:</strong> <span id="modalStatus"></span></p>
+                        </div>
+                    </div>
+                    <div class="progress mt-3">
+                        <div id="modalProgress" class="progress-bar" role="progressbar"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                    <button type="button" class="btn btn-danger" id="donateModalBtn">تبرع للمشروع</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>إغاثة غزة</h5>
+                    <p>مؤسسة خيرية إنسانية تعمل في قطاع غزة منذ 2010</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>روابط سريعة</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">الرئيسية</a></li>
+                        <li><a href="projects.html" class="text-white">مشاريعنا</a></li>
+                        <li><a href="contact.html" class="text-white">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>تواصل معنا</h5>
+                    <p><i class="fas fa-phone"></i> 00972591234567</p>
+                    <p><i class="fas fa-envelope"></i> info@gaza-relief.org</p>
+                </div>
+            </div>
+            <hr class="bg-white">
+            <p class="text-center mb-0">&copy; 2024 مؤسسة إغاثة غزة. جميع الحقوق محفوظة</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // بيانات المشاريع
+        const projects = [
+            {
+                id: 1,
+                title: "سلال غذائية شهرية",
+                category: "urgent",
+                description: "توفير سلال غذائية شهرية تحتوي على المواد الأساسية لألف أسرة محتاجة في شمال غزة",
+                budget: "$50,000",
+                duration: "6 أشهر",
+                beneficiaries: "1,000 أسرة",
+                status: "قيد التنفيذ",
+                progress: 70,
+                image: "https://www.khaironline.net/Relief/Relief_View.aspx?id=43396"
+            },
+            {
+                id: 2,
+                title: "مشروع الإسكان المؤقت",
+                category: "ongoing",
+                description: "بناء وحدات سكنية مؤقتة للأسر التي دمرت منازلها في الحرب الأخيرة",
+                budget: "$200,000",
+                duration: "8 أشهر",
+                beneficiaries: "120 أسرة",
+                status: "قيد التنفيذ",
+                progress: 40,
+                image: "https://palimar.org/%D8%AA%D9%88%D9%81%D9%8A%D8%B1-100-%D8%AE%D9%8A%D9%85%D8%A9-%D9%84%D8%A5%D9%82%D8%A7%D9%85%D8%A9-%D9%85%D8%AE%D9%8A%D9%85-%D8%A5%D9%8A%D9%88%D8%A7%D8%A1-%D9%85%D8%A4%D9%82%D8%AA-%D9%81%D9%8A-%D9%85/"
+            },
+            {
+                id: 3,
+                title: "عيادة طبية متنقلة",
+                category: "completed",
+                description: "عيادة طبية متنقلة تقدم الخدمات الصحية الأساسية للمناطق النائية",
+                budget: "$80,000",
+                duration: "4 أشهر",
+                beneficiaries: "5,000 مريض",
+                status: "مكتمل",
+                progress: 100,
+                image: "https://safa.ps/image/gallery/3010/%D8%B9%D9%8A%D8%A7%D8%AF%D8%A9-%D8%B7%D8%A8%D9%8A%D8%A9-%D9%85%D8%AA%D9%86%D9%82%D9%84%D8%A9-%D9%84%D9%81%D8%AD%D9%88%D8%B5%D8%A7%D8%AA-%D9%83%D9%88%D8%B1%D9%88%D9%86%D8%A7-%D8%A8%D8%A7%D9%84%D8%AE%D9%84%D9%8A%D9%84"
+            },
+            {
+                id: 4,
+                title: "دعم تعليمي للطلاب",
+                category: "ongoing",
+                description: "توفير مستلزمات مدرسية ومنح دراسية للطلاب المتضررين",
+                budget: "$30,000",
+                duration: "12 شهر",
+                beneficiaries: "2,000 طالب",
+                status: "قيد التنفيذ",
+                progress: 60,
+                image: "https://www.alaraby.co.uk/society/%D9%81%D8%AA%D8%AD-%D9%85%D8%AF%D8%A7%D8%B1%D8%B3-%D8%BA%D8%B2%D8%A9-%D8%A7%D8%B3%D8%AA%D8%A6%D9%86%D8%A7%D9%81-%D8%A7%D9%84%D8%AA%D8%B9%D9%84%D9%8A%D9%85-%D9%84%D8%B6%D9%85%D8%A7%D9%86-%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84-%D8%A7%D9%84%D8%B7%D9%84%D8%A7%D8%A8"
+            },
+            {
+                id: 5,
+                title: "مشاريع صغيرة للأسر",
+                category: "ongoing",
+                description: "تمويل مشاريع صغيرة تدر دخلاً للأسر التي فقدت معيلها",
+                budget: "$100,000",
+                duration: "10 أشهر",
+                beneficiaries: "200 أسرة",
+                status: "قيد التنفيذ",
+                progress: 30,
+                image: "https://www.iico.org/en/news-ar/..-50-ar.html"
+            },
+            {
+                id: 6,
+                title: "توفير مياه الشرب",
+                category: "urgent",
+                description: "توفير خزانات مياه وصيانة آبار في المناطق التي تعاني من شح المياه",
+                budget: "$40,000",
+                duration: "3 أشهر",
+                beneficiaries: "10,000 شخص",
+                status: "مكتمل",
+                progress: 100,
+                image: "https://safa.ps/post/348359/97-%D9%85%D9%86-%D8%A7%D9%84%D9%85%D9%8A%D8%A7%D9%87-%D8%A7%D9%84%D8%AC%D9%88%D9%81%D9%8A%D8%A9-%D8%A8%D8%BA%D8%B2%D8%A9-%D8%BA%D9%8A%D8%B1-%D9%85%D8%B7%D8%A7%D8%A8%D9%82%D8%A9-%D9%84%D9%85%D8%B9%D8%A7%D9%8A%D9%8A%D8%B1-%D9%85%D9%8A%D8%A7%D9%87-%D8%A7%D9%84%D8%B4%D8%B1%D8%A8"
+            }
+        ];
+
+        // دالة لعرض المشاريع
+        function displayProjects(filter = 'all') {
+            const container = document.getElementById('projectsContainer');
+            const tableBody = document.getElementById('projectsTable');
+            
+            container.innerHTML = '';
+            tableBody.innerHTML = '';
+            
+            let filteredProjects = projects;
+            if (filter !== 'all') {
+                filteredProjects = projects.filter(p => p.category === filter);
+            }
+            
+            // عرض المشاريع في بطاقات
+            filteredProjects.forEach(project => {
+                // البطاقة
+                const card = document.createElement('div');
+                card.className = 'col-md-4 mb-4 project-card';
+                card.setAttribute('data-category', project.category);
+                
+                card.innerHTML = `
+                    <div class="card h-100">
+                        <img src="${project.image}" class="card-img-top project-img" alt="${project.title}">
+                        <div class="card-body">
+                            <h5 class="card-title">${project.title}</h5>
+                            <p class="card-text">${project.description.substring(0, 100)}...</p>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-success" style="width: ${project.progress}%">
+                                    ${project.progress}%
+                                </div>
+                            </div>
+                            <p><strong>الحالة:</strong> <span class="badge bg-${getStatusColor(project.status)}">${project.status}</span></p>
+                            <button class="btn btn-outline-danger btn-sm view-details" data-id="${project.id}">
+                                <i class="fas fa-eye"></i> تفاصيل أكثر
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+                
+                // الصف في الجدول
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${project.title}</td>
+                    <td>${project.budget}</td>
+                    <td>${project.duration}</td>
+                    <td>${project.beneficiaries}</td>
+                    <td><span class="badge bg-${getStatusColor(project.status)}">${project.status}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary view-project" data-id="${project.id}">
+                            <i class="fas fa-info-circle"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-success donate-btn" data-id="${project.id}">
+                            <i class="fas fa-donate"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+            
+            // إضافة أحداث للأزرار
+            addEventListeners();
+        }
+        
+        // دالة للحصول على لون الحالة
+        function getStatusColor(status) {
+            switch(status) {
+                case 'مكتمل': return 'success';
+                case 'قيد التنفيذ': return 'primary';
+                case 'معلق': return 'warning';
+                default: return 'secondary';
+            }
+        }
+        
+        // دالة لعرض تفاصيل المشروع في Modal
+        function showProjectDetails(id) {
+            const project = projects.find(p => p.id == id);
+            if (!project) return;
+            
+            document.getElementById('modalTitle').textContent = project.title;
+            document.getElementById('modalImage').src = project.image;
+            document.getElementById('modalDescription').textContent = project.description;
+            document.getElementById('modalBudget').textContent = project.budget;
+            document.getElementById('modalDuration').textContent = project.duration;
+            document.getElementById('modalBeneficiaries').textContent = project.beneficiaries;
+            document.getElementById('modalStatus').textContent = project.status;
+            document.getElementById('modalProgress').style.width = `${project.progress}%`;
+            document.getElementById('modalProgress').textContent = `${project.progress}%`;
+            
+            // تغيير لون شريط التقدم حسب النسبة
+            if (project.progress < 30) {
+                document.getElementById('modalProgress').className = 'progress-bar bg-danger';
+            } else if (project.progress < 70) {
+                document.getElementById('modalProgress').className = 'progress-bar bg-warning';
+            } else {
+                document.getElementById('modalProgress').className = 'progress-bar bg-success';
+            }
+            
+            const modal = new bootstrap.Modal(document.getElementById('projectModal'));
+            modal.show();
+        }
+        
+        // دالة لإضافة الأحداث
+        function addEventListeners() {
+            // أحداث أزرار التفاصيل
+            document.querySelectorAll('.view-details, .view-project').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const projectId = this.getAttribute('data-id');
+                    showProjectDetails(projectId);
+                });
+            });
+            
+            // أحداث أزرار التبرع
+            document.querySelectorAll('.donate-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const projectId = this.getAttribute('data-id');
+                    alert(`شكراً لرغبتك في التبرع للمشروع رقم ${projectId}. سيتم توجيهك إلى صفحة التبرع.`);
+                });
+            });
+            
+            // زر التبرع في المودال
+            document.getElementById('donateModalBtn').addEventListener('click', function() {
+                alert('شكراً لتبرعك! سيتم توجيهك إلى صفحة الدفع الآمن.');
+            });
+        }
+        
+        // تهيئة الصفحة عند التحميل
+        document.addEventListener('DOMContentLoaded', function() {
+            displayProjects();
+            
+            // أحداث أزرار التصفية
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // إزالة النشاط من جميع الأزرار
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
+                    // إضافة النشاط للزر المحدد
+                    this.classList.add('active');
+                    
+                    // تصفية المشاريع
+                    const filter = this.getAttribute('data-filter');
+                    displayProjects(filter);
+                });
+            });
+            
+            // حدث البحث
+            document.getElementById('searchBtn').addEventListener('click', function() {
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                const cards = document.querySelectorAll('.project-card');
+                
+                cards.forEach(card => {
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    const description = card.querySelector('.card-text').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+            
+            // بحث أثناء الكتابة
+            document.getElementById('searchInput').addEventListener('keyup', function() {
+                document.getElementById('searchBtn').click();
+            });
+        });
+    </script>
+</body>
+</html>
